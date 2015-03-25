@@ -5,7 +5,7 @@ var workspaceId = 498346170860;
 
 // GET a list of projects:
 
-request.get(asanaUrl + 'workspaces/' + workspaceId + '/projects').auth(ASANA_KEY, null);
+var projects = request.get(asanaUrl + 'workspaces/' + workspaceId + '/projects').auth(ASANA_KEY, null).data;
 
 // curl -u API_KEY: https://app.asana.com/api/1.0/workspaces/498346170860/projects
 
@@ -30,7 +30,7 @@ request.get(asanaUrl + 'workspaces/' + workspaceId + '/projects').auth(ASANA_KEY
 
   // GET all the tasks in the project:
 
-  request.get(asanaUrl + 'projects/' + projectId + '/tasks').auth(ASANA_KEY, null);
+  var tasks = request.get(asanaUrl + 'projects/' + projectId + '/tasks').auth(ASANA_KEY, null).data;
 
   // curl -u API_KEY: https://app.asana.com/api/1.0/projects/29918323866112/tasks
 
@@ -56,3 +56,32 @@ request.get(asanaUrl + 'workspaces/' + workspaceId + '/projects').auth(ASANA_KEY
   //     },
   //     {
 
+
+
+// Parse through the list of tasks to sum up the number of companies applied to
+
+// Graveyard
+// Applied
+// Phone Screen Scheduled
+// Phone Screen Completed
+// Technical Screen Scheduled
+// Technical Screen Completed
+// Coding Challenge Received
+// Coding Challenge Completed
+// On-site Interview Scheduled
+// On-side Interview Completed
+// Offers
+
+var inAppliedSection = false;
+tasks.reduce(function countApplied(memo, item) {
+  if (item.name.slice(-1) === ':') {
+    // we're in a section header. check if it is one of the ones above that we want to count
+    inAppliedSection = listOfCountable.contains(item.name);
+  } else {
+    if (inAppliedSection) {
+      memo++;
+    }
+  }
+
+  return memo;
+}, 0);
