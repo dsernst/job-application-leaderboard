@@ -1,2 +1,2 @@
 # job-application-leaderboard
-Applying to Jobs: the Game
+Applying to Jobs: It's a Numbers Game
