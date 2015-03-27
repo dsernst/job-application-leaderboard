@@ -75,10 +75,10 @@ var Tagline = React.createClass({
 });
 
 var data = [
-  {favoriteColor:'blue',  age: 30, name: "Athos",      job: "Musketeer"},
-  {favoriteColor: 'red' ,  age: 33, name: "Porthos",    job: "Musketeer"},
-  {favoriteColor: 'blue' ,  age: 27, name: "Aramis",     job: "Musketeer"},
-  {favoriteColor: 'orange' ,  age: 25, name: "d'Artagnan", job: "Guard"}
+  {name: 'David', total: 1, lastDay: 0, last7: 0, last30: 1},
+  {name: 'Kiran', total: 30, lastDay: 5, last7: 11, last30: 30},
+  {name: 'Neil', total: 13, lastDay: 0, last7: 4, last30: 13},
+  {name: 'Steven', total: 45, lastDay: 4, last7: 18, last30: 45},
 ];
 
 var Highscores = React.createClass({
