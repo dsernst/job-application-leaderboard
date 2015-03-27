@@ -88,7 +88,7 @@ var data = [
 var Highscores = React.createClass({
   render: function () {
     return (
-      <Paper zDepth={2}>
+      <Paper zDepth={3}>
         <ReactTable data={data} />
       </Paper>
     );
