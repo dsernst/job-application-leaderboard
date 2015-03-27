@@ -82,6 +82,7 @@ var data = [
   {name: 'Kiran Rao', cohort: 'HR23', lastDay: 5, lastWeek: 11, lastMonth: 30, total: 30},
   {name: 'Neil Lokare', cohort: 'HR23', lastDay: 0, lastWeek: 4, lastMonth: 13, total: 13},
   {name: 'Steven Williams', cohort: 'HR23', lastDay: 4, lastWeek: 18, lastMonth: 45, total: 45},
+  {name: 'Matt Conrad', cohort: 'HR23', lastDay: 3, lastWeek: 20, lastMonth: 31, total: 31}
 ];
 
 var Highscores = React.createClass({
