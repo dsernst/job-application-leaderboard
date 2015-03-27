@@ -38,9 +38,36 @@ module.exports = React.createClass({
   render: function () {
     return (
       <div className='home-page'>
-        job-application-leaderboard
+        <Header />
       </div>
     );
   }
 
+});
+
+var Header = React.createClass({
+  render: function () {
+    return (
+      <div className='header'>
+        <Headline />
+        <Tagline />
+      </div>
+    );
+  }
+});
+
+var Headline = React.createClass({
+  render: function () {
+    return (
+      <h1>The Job Application Leaderboard</h1>
+    );
+  }
+});
+
+var Tagline = React.createClass({
+  render: function () {
+    return (
+      <h2>A Numbers Game</h2>
+    );
+  }
 });
