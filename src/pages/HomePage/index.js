@@ -71,7 +71,7 @@ var Headline = React.createClass({
 var Tagline = React.createClass({
   render: function () {
     return (
-      <h2><em>It's a Numbers Game</em></h2>
+      <h2><em>It's a numbers game, keep applying!</em></h2>
     );
   }
 });
