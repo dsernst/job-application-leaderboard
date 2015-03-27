@@ -43,6 +43,7 @@ module.exports = React.createClass({
       <div className='home-page'>
         <Header />
         <Highscores />
+        <Updated />
       </div>
     );
   }
@@ -71,7 +72,7 @@ var Headline = React.createClass({
 var Tagline = React.createClass({
   render: function () {
     return (
-      <h2><em>It's a Numbers Game</em></h2>
+      <h2><em>It's a numbers game, keep applying!</em></h2>
     );
   }
 });
@@ -91,6 +92,14 @@ var Highscores = React.createClass({
       <Paper zDepth={3}>
         <ReactTable data={data} />
       </Paper>
+    );
+  }
+});
+
+var Updated = React.createClass({
+  render: function () {
+    return (
+      <p className='updated'>Data last updated: Friday March 27, 2015, 3:16pm PST</p>
     );
   }
 });
