@@ -77,11 +77,11 @@ var Tagline = React.createClass({
 });
 
 var data = [
-  {name: 'David Ernst', cohort: 'HR23', total: 1, lastDay: 0, last7: 0, last30: 1},
-  {name: 'Jake Obron', cohort: 'HR22', total: 1, lastDay: 0, last7: 0, last30: 1}
-  {name: 'Kiran Rao', cohort: 'HR23', total: 30, lastDay: 5, last7: 11, last30: 30},
-  {name: 'Neil Lokare', cohort: 'HR23', total: 13, lastDay: 0, last7: 4, last30: 13},
-  {name: 'Steven Williams', cohort: 'HR23', total: 45, lastDay: 4, last7: 18, last30: 45},
+  {name: 'David Ernst', cohort: 'HR23', lastDay: 0, lastWeek: 0, lastMonth: 1, total: 1},
+  {name: 'Jake Obron', cohort: 'HR22', lastDay: 0, lastWeek: 0, lastMonth: 1, total: 1},
+  {name: 'Kiran Rao', cohort: 'HR23', lastDay: 5, lastWeek: 11, lastMonth: 30, total: 30},
+  {name: 'Neil Lokare', cohort: 'HR23', lastDay: 0, lastWeek: 4, lastMonth: 13, total: 13},
+  {name: 'Steven Williams', cohort: 'HR23', lastDay: 4, lastWeek: 18, lastMonth: 45, total: 45},
 ];
 
 var Highscores = React.createClass({
