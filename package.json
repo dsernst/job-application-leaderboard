@@ -1,4 +1,8 @@
 {
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dsernst/job-application-leaderboard.git"
+  },
   "scripts": {
     "start": "gulp develop",
     "test": "jest"
