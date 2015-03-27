@@ -7439,7 +7439,7 @@ module.exports = React.createClass({displayName: "exports",
   },
   getInitialState: function () {
     return {
-      sortDirection: 'descending'
+      sortDirection: 'ascending'
     };
   },
   handleHeadingClick: function (data) {
@@ -28071,7 +28071,8 @@ module.exports = React.createClass({displayName: "exports",
     return (
       React.createElement("div", {className: "home-page"}, 
         React.createElement(Header, null), 
-        React.createElement(Highscores, null)
+        React.createElement(Highscores, null), 
+        React.createElement(Updated, null)
       )
     );
   }
@@ -28100,7 +28101,7 @@ var Headline = React.createClass({displayName: "Headline",
 var Tagline = React.createClass({displayName: "Tagline",
   render: function () {
     return (
-      React.createElement("h2", null, React.createElement("em", null, "It's a Numbers Game"))
+      React.createElement("h2", null, React.createElement("em", null, "It's a numbers game, keep applying!"))
     );
   }
 });
@@ -28120,6 +28121,14 @@ var Highscores = React.createClass({displayName: "Highscores",
       React.createElement(Paper, {zDepth: 3}, 
         React.createElement(ReactTable, {data: data})
       )
+    );
+  }
+});
+
+var Updated = React.createClass({displayName: "Updated",
+  render: function () {
+    return (
+      React.createElement("p", {className: "updated"}, "Data last updated: Friday March 27, 2015, 3:16pm PST")
     );
   }
 });
