@@ -1,4 +1,6 @@
 var React = require('react');
+var mui = require('material-ui');
+var Paper = mui.Paper;
 var ReactTable = require('react-table');
 
 // If you are going to be using stores, be sure to first load in the `Fluxxor`
@@ -84,7 +86,9 @@ var data = [
 var Highscores = React.createClass({
   render: function () {
     return (
-      <ReactTable data={data} />
+      <Paper zDepth={2}>
+        <ReactTable data={data} />
+      </Paper>
     );
   }
 });
