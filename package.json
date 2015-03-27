@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "server": "gulp develop",
+    "start": "gulp develop",
     "test": "jest"
   },
   "devDependencies": {
