@@ -42,14 +42,15 @@ th {
   font-weight: 600;
 }
 
-.react-table__th--ascending:after {
-  content: '^';
+.react-table__th--ascending::after {
+  content: '\25B2';
   margin-left: 10px;
   color: #666;
 }
 
-.react-table__th--descending:after {
-  content: 'v';
+.react-table__th--descending::after {
+  content: '\25BC';
+  font-size: 90%;
   margin-left: 10px;
   color: #666;
 }
