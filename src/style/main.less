@@ -19,6 +19,17 @@
 
 @import "material-ui/components.less";
 
+html {
+  background: #2c539e;
+  background: -moz-radial-gradient(center, ellipse cover,  #2c539e 0%, #102856 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#2c539e), color-stop(100%,#102856));
+  background: -webkit-radial-gradient(center, ellipse cover,  #2c539e 0%,#102856 100%);
+  background: -o-radial-gradient(center, ellipse cover,  #2c539e 0%,#102856 100%);
+  background: -ms-radial-gradient(center, ellipse cover,  #2c539e 0%,#102856 100%);
+  background: radial-gradient(ellipse at center,  #2c539e 0%,#102856 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c539e', endColorstr='#102856',GradientType=1 );
+}
+
 body {
   max-width: 75%;
   margin: 0 auto;
@@ -26,6 +37,20 @@ body {
 
 .mui-app-bar {
   display: none;
+}
+
+h1 {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.74);
+  font-weight: 500;
+}
+
+h2 {
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.mui-paper {
+  background-color: #ddd;
 }
 
 table {
@@ -40,4 +65,17 @@ td, th {
 
 th {
   font-weight: 600;
+}
+
+.react-table__th--ascending::after {
+  content: '\25B2';
+  margin-left: 10px;
+  color: #666;
+}
+
+.react-table__th--descending::after {
+  content: '\25BC';
+  font-size: 90%;
+  margin-left: 10px;
+  color: #666;
 }
