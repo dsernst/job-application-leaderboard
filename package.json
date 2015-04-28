@@ -23,6 +23,7 @@
     "vinyl-source-stream": "^1.0.0"
   },
   "dependencies": {
+    "dotenv": "^1.1.0",
     "fluxxor": "^1.5.1",
     "material-ui": "^0.3.1",
     "react": "^0.12.1",
