@@ -13,7 +13,7 @@ asana.workspaces.findAll()
     return workspaces.data;
   })
   .filter(function (workspace) {
-    // find the 'Reactor Education Group' workspace
+    // find the 'Hack Reactor' org workspace
     return workspace.name === 'Reactor Education Group';
   })
   .then(function (workspace) {
@@ -33,8 +33,7 @@ asana.workspaces.findAll()
     })[0];
   })
   .then(function (team) {
-    console.log('team', team);
-
+    // We need to use request() here because the node-asana library doesn't support querying projects by team
     var response = '';
     request.get('https://app.asana.com/api/1.0/teams/' + team.id + '/projects')
       .auth(ASANA_KEY)
@@ -44,32 +43,8 @@ asana.workspaces.findAll()
       .on('end', function () {
         console.log(JSON.parse(response));
       });
-  })
-  .then(function (tasks) {
-    // console.log(tasks);
-  })
-  .catch(function (error) {
-    console.log(error);
   });
 
-
-// GET a list of projects:
-// curl -u API_KEY: https://app.asana.com/api/1.0/workspaces/498346170860/projects
-
-// returns:
-
-// {
-//   "data":[
-//     {
-//       "id":29918323866102,
-//       "name":"testing asana API 1"
-//     },
-//     {
-//       "id":29918323866112,
-//       "name":"testing asana API 2"
-//     }
-//   ]
-// }
 
 
 // For each relevant project:
