@@ -103,7 +103,12 @@ function countApplied(tasks) {
 function countAllStudentsApplied(students) {
   // map each student onto a promise
   var studentApplicationCountsPromises = students.projects.map(function (student) {
-    return getAllTasksByProjectId(student.id).then(countApplied);
+    return getAllTasksByProjectId(student.id)
+      .then(countApplied)
+      .then(function (count) {
+        console.log(student.asanaName, ':', count);
+        return count;
+      });
   });
 
 
@@ -127,4 +132,5 @@ function countAllStudentsApplied(students) {
 }
 
 countAllStudentsApplied(march2015students)
-  .tap(console.log);
+  .tap(console.log)
+  .catch(console.log.bind(console));
