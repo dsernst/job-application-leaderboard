@@ -3,49 +3,48 @@ var Asana = require('asana');
 var _ = require('lodash');
 var request = require('request');
 var ASANA_KEY = process.env.ASANA_API_KEY;
-var asana = Asana.Client.create().useBasicAuth(process.env.ASANA_API_KEY);
+var asana = Asana.Client.create().useBasicAuth(ASANA_KEY);
 
+function getAsanaProjectsByTeamName(teamName) {
+  asana.workspaces.findAll()
+    .then(function (workspaces) {
+      return workspaces.data;
+    })
+    .filter(function (workspace) {
+      // find the 'Hack Reactor' org workspace
+      return workspace.name === process.env.ORG_NAME;
+    })
+    .then(function (workspace) {
+      return asana.teams.findByOrganization(workspace[0].id);
+    })
+    // .then(function (teams) {
+    //   // find all 'JOB SEARCH' teams
+    //   return teams.data.filter(function (team) {
+    //     return team.name.toLowerCase().indexOf('job search') >= 0;
+    //   });
+    // })
+    .then(function (teams) {
+      // find the team for March 2015 Job Searchers
+      return teams.data.filter(function (team) {
+        return team.name === teamName;
+      })[0];
+    })
+    .then(function (team) {
+      console.log('team:  ', team);
+      // We need to use request() here because the node-asana library doesn't support querying projects by team
+      var response = '';
+      request.get('https://app.asana.com/api/1.0/teams/' + team.id + '/projects')
+        .auth(ASANA_KEY)
+        .on('data', function (data) {
+          response += data;
+        })
+        .on('end', function () {
+          console.log(JSON.parse(response));
+        });
+    });
+}
 
-var reactorSpace;
-
-asana.workspaces.findAll()
-  .then(function (workspaces) {
-    return workspaces.data;
-  })
-  .filter(function (workspace) {
-    // find the 'Hack Reactor' org workspace
-    return workspace.name === 'Reactor Education Group';
-  })
-  .then(function (workspace) {
-    reactorSpace = workspace[0];
-    return asana.teams.findByOrganization(reactorSpace.id);
-  })
-  // .then(function (teams) {
-  //   // find all 'JOB SEARCH' teams
-  //   return teams.data.filter(function (team) {
-  //     return team.name.toLowerCase().indexOf('job search') >= 0;
-  //   });
-  // })
-  .then(function (teams) {
-    // find the team for March 2015 Job Searchers
-    return teams.data.filter(function (team) {
-      return team.name === 'HR - MAR 2015 JOB SEARCH TRACKING';
-    })[0];
-  })
-  .then(function (team) {
-    // We need to use request() here because the node-asana library doesn't support querying projects by team
-    var response = '';
-    request.get('https://app.asana.com/api/1.0/teams/' + team.id + '/projects')
-      .auth(ASANA_KEY)
-      .on('data', function (data) {
-        response += data;
-      })
-      .on('end', function () {
-        console.log(JSON.parse(response));
-      });
-  });
-
-
+getAsanaProjectsByTeamName(process.env.MARCH);
 
 // For each relevant project:
 
