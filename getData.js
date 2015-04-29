@@ -1,12 +1,65 @@
+require('dotenv').load();
+var Asana = require('asana');
+var _ = require('lodash');
 var request = require('request');
-var asanaUrl = 'https://app.asana.com/api/1.0/';
 var ASANA_KEY = process.env.ASANA_API_KEY;
-var workspaceId = 498346170860;
+console.log(ASANA_KEY);
+var asana = Asana.Client.create().useBasicAuth(process.env.ASANA_API_KEY);
+
+
+var reactorSpace;
+
+asana.workspaces.findAll()
+  .then(function (workspaces) {
+    return workspaces.data;
+  })
+  .filter(function (workspace) {
+    // find the 'Reactor Education Group' workspace
+    return workspace.name === 'Reactor Education Group';
+  })
+  .then(function (workspace) {
+    reactorSpace = workspace[0];
+    return asana.teams.findByOrganization(reactorSpace.id);
+  })
+  // .then(function (teams) {
+  //   // find all 'JOB SEARCH' teams
+  //   return teams.data.filter(function (team) {
+  //     return team.name.toLowerCase().indexOf('job search') >= 0;
+  //   });
+  // })
+  .then(function (teams) {
+    // find the team for March 2015 Job Searchers
+    return teams.data.filter(function (team) {
+      return team.name === 'HR - MAR 2015 JOB SEARCH TRACKING';
+    })[0];
+  })
+  .then(function (team) {
+
+    // var options = {
+    //   host: 'https://app.asana.com/',
+    //   port: 80,
+    //   path: '/api/1.0/teams/' + team.id + '/projects'
+    // };
+
+    return request.get('https://app.asana.com/api/1.0/teams/' + team.id + '/projects').auth(ASANA_KEY, null, false).data;
+
+    // return asana.projects.findAll({
+    //   archived: false,
+    //   workspace: reactorSpace.id,
+    //   opt_fields: 'name, team',
+    //   opt_pretty: true,
+    //   limit: 100
+    // });
+  })
+  .then(function (tasks) {
+    console.log(tasks);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
 
 // GET a list of projects:
-
-var projects = request.get(asanaUrl + 'workspaces/' + workspaceId + '/projects').auth(ASANA_KEY, null).data;
-
 // curl -u API_KEY: https://app.asana.com/api/1.0/workspaces/498346170860/projects
 
 // returns:
@@ -29,9 +82,6 @@ var projects = request.get(asanaUrl + 'workspaces/' + workspaceId + '/projects')
 
 
   // GET all the tasks in the project:
-
-  var tasks = request.get(asanaUrl + 'projects/' + projectId + '/tasks').auth(ASANA_KEY, null).data;
-
   // curl -u API_KEY: https://app.asana.com/api/1.0/projects/29918323866112/tasks
 
   // returns:
@@ -73,15 +123,15 @@ var projects = request.get(asanaUrl + 'workspaces/' + workspaceId + '/projects')
 // Offers
 
 var inAppliedSection = false;
-tasks.reduce(function countApplied(memo, item) {
-  if (item.name.slice(-1) === ':') {
-    // we're in a section header. check if it is one of the ones above that we want to count
-    inAppliedSection = listOfCountable.contains(item.name);
-  } else {
-    if (inAppliedSection) {
-      memo++;
-    }
-  }
+// tasks.reduce(function countApplied(memo, item) {
+//   if (item.name.slice(-1) === ':') {
+//     // we're in a section header. check if it is one of the ones above that we want to count
+//     inAppliedSection = listOfCountable.contains(item.name);
+//   } else {
+//     if (inAppliedSection) {
+//       memo++;
+//     }
+//   }
 
-  return memo;
-}, 0);
+//   return memo;
+// }, 0);
