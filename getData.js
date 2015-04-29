@@ -3,7 +3,6 @@ var Asana = require('asana');
 var _ = require('lodash');
 var request = require('request');
 var ASANA_KEY = process.env.ASANA_API_KEY;
-console.log(ASANA_KEY);
 var asana = Asana.Client.create().useBasicAuth(process.env.ASANA_API_KEY);
 
 
@@ -34,25 +33,20 @@ asana.workspaces.findAll()
     })[0];
   })
   .then(function (team) {
+    console.log('team', team);
 
-    // var options = {
-    //   host: 'https://app.asana.com/',
-    //   port: 80,
-    //   path: '/api/1.0/teams/' + team.id + '/projects'
-    // };
-
-    return request.get('https://app.asana.com/api/1.0/teams/' + team.id + '/projects').auth(ASANA_KEY, null, false).data;
-
-    // return asana.projects.findAll({
-    //   archived: false,
-    //   workspace: reactorSpace.id,
-    //   opt_fields: 'name, team',
-    //   opt_pretty: true,
-    //   limit: 100
-    // });
+    var response = '';
+    request.get('https://app.asana.com/api/1.0/teams/' + team.id + '/projects')
+      .auth(ASANA_KEY)
+      .on('data', function (data) {
+        response += data;
+      })
+      .on('end', function () {
+        console.log(JSON.parse(response));
+      });
   })
   .then(function (tasks) {
-    console.log(tasks);
+    // console.log(tasks);
   })
   .catch(function (error) {
     console.log(error);
