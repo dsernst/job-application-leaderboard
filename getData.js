@@ -49,9 +49,9 @@ function getAsanaProjectsByTeamName(teamName) {
 
 
 var march2015students = require('./march2015students.js');
-var sample = march2015students.projects[4];
+var sample = march2015students.projects[47];
 
-// console.log(sample);
+console.log(sample);
 
 function getAllTasksByProjectId(id, debug) {
   return new Promise(function (resolve, reject) {
@@ -67,75 +67,42 @@ function getAllTasksByProjectId(id, debug) {
         .then(function (tasks) {
           [].push.apply(all, tasks.data);
           if (tasks.next_page) {
-            getAPageOfTasks(tasks.next_page.offset)
+            getAPageOfTasks(tasks.next_page.offset);
           } else {
             resolve(all);
           }
         })
-        .catch(reject)
-    })();
+        .catch(reject);
+    }());
   });
 }
 
-getAllTasksByProjectId(sample.id, true)
-  .tap(console.log)
-
-
-
-// For each relevant project:
-
-
-  // GET all the tasks in the project:
-  // curl -u API_KEY: https://app.asana.com/api/1.0/projects/29918323866112/tasks
-
-  // returns:
-
-  // {
-  //   "data":[
-  //     {
-  //       "id":29918323866114,
-  //       "name":"heres a task"
-  //     },
-  //     {
-  //       "id":29918323866116,
-  //       "name":"and this task"
-  //     },
-  //     {
-  //       "id":29918323866118,
-  //       "name":"hello world"
-  //     },
-  //     {
-  //       "id":29918323866120,
-  //       "name":"and another task"
-  //     },
-  //     {
+// getAllTasksByProjectId(sample.id)
+//   .tap(console.log)
+//   .then(countApplied)
+//   .tap(console.log)
 
 
 
 // Parse through the list of tasks to sum up the number of companies applied to
+var listOfCountable = ['Graveyard', 'Applied', 'Phone Screen Scheduled', 'Phone Screen Completed', 'Technical Screen Scheduled', 'Technical Screen Completed', 'Coding Challenge Received', 'Coding Challenge Completed', 'On-site Interview Scheduled', 'On-side Interview Completed', 'Offers'];
+function countApplied(tasks) {
+  var inAppliedSection = false;
+  return tasks.reduce(function countApplied(memo, item) {
+    if (item.name.slice(-1) === ':') {
+      // we're in a section header. check if it is one of the ones above that we want to count
+      inAppliedSection = _.contains(listOfCountable, item.name.slice(0, item.name.length - 1));
+    } else {
+      if (inAppliedSection) {
+        // don't count empty names (why doesn't anyone know how to use Asana?)
+        if (item.name) {
+          memo++;
+        }
+      }
+    }
+    return memo;
+  }, 0);
+}
 
-// Graveyard
-// Applied
-// Phone Screen Scheduled
-// Phone Screen Completed
-// Technical Screen Scheduled
-// Technical Screen Completed
-// Coding Challenge Received
-// Coding Challenge Completed
-// On-site Interview Scheduled
-// On-side Interview Completed
-// Offers
 
-var inAppliedSection = false;
-// tasks.reduce(function countApplied(memo, item) {
-//   if (item.name.slice(-1) === ':') {
-//     // we're in a section header. check if it is one of the ones above that we want to count
-//     inAppliedSection = listOfCountable.contains(item.name);
-//   } else {
-//     if (inAppliedSection) {
-//       memo++;
-//     }
-//   }
-
-//   return memo;
-// }, 0);
+// console.log(countApplied(require('./sampleTasks.js')));
