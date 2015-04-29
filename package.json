@@ -24,6 +24,7 @@
     "vinyl-source-stream": "^1.0.0"
   },
   "dependencies": {
+    "bluebird": "^2.9.25",
     "dotenv": "^1.1.0",
     "fluxxor": "^1.5.1",
     "lodash": "^3.7.0",

@@ -4,6 +4,7 @@ var _ = require('lodash');
 var request = require('request');
 var ASANA_KEY = process.env.ASANA_API_KEY;
 var asana = Asana.Client.create().useBasicAuth(ASANA_KEY);
+var Promise = require('bluebird');
 
 function getAsanaProjectsByTeamName(teamName) {
   asana.workspaces.findAll()
@@ -43,8 +44,43 @@ function getAsanaProjectsByTeamName(teamName) {
         });
     });
 }
+// getAsanaProjectsByTeamName(process.env.MARCH);
 
-getAsanaProjectsByTeamName(process.env.MARCH);
+
+
+var march2015students = require('./march2015students.js');
+var sample = march2015students.projects[4];
+
+// console.log(sample);
+
+function getAllTasksByProjectId(id, debug) {
+  return new Promise(function (resolve, reject) {
+    var all = [];
+    (function getAPageOfTasks(offset) {
+      asana.tasks.findByProject(id, {offset: offset})
+        .then(function (data) {
+          if (debug) {
+            console.log(data);
+          }
+          return data;
+        })
+        .then(function (tasks) {
+          [].push.apply(all, tasks.data);
+          if (tasks.next_page) {
+            getAPageOfTasks(tasks.next_page.offset)
+          } else {
+            resolve(all);
+          }
+        })
+        .catch(reject)
+    })();
+  });
+}
+
+getAllTasksByProjectId(sample.id, true)
+  .tap(console.log)
+
+
 
 // For each relevant project:
 
