@@ -51,7 +51,7 @@ function getAsanaProjectsByTeamName(teamName) {
 var march2015students = require('./march2015students.js');
 var sample = march2015students.projects[47];
 
-console.log(sample);
+// console.log(sample);
 
 function getAllTasksByProjectId(id, debug) {
   return new Promise(function (resolve, reject) {
@@ -77,12 +77,6 @@ function getAllTasksByProjectId(id, debug) {
   });
 }
 
-// getAllTasksByProjectId(sample.id)
-//   .tap(console.log)
-//   .then(countApplied)
-//   .tap(console.log)
-
-
 
 // Parse through the list of tasks to sum up the number of companies applied to
 var listOfCountable = ['Graveyard', 'Applied', 'Phone Screen Scheduled', 'Phone Screen Completed', 'Technical Screen Scheduled', 'Technical Screen Completed', 'Coding Challenge Received', 'Coding Challenge Completed', 'On-site Interview Scheduled', 'On-side Interview Completed', 'Offers'];
@@ -105,4 +99,32 @@ function countApplied(tasks) {
 }
 
 
-// console.log(countApplied(require('./sampleTasks.js')));
+
+function countAllStudentsApplied(students) {
+  // map each student onto a promise
+  var studentApplicationCountsPromises = students.projects.map(function (student) {
+    return getAllTasksByProjectId(student.id).then(countApplied);
+  });
+
+
+  // do promise.all on the entire array of Student Promises
+    // will return an array all the projects
+  return Promise.all(studentApplicationCountsPromises)
+    .then(function (studentApplicationCounts) {
+      return students.projects.reduce(function (memo, student, i) {
+        memo[student.asanaName] = studentApplicationCounts[i];
+        return memo;
+      }, {});
+    });
+
+
+  // return something like this:
+  // {
+  //  'David Ernst': 16,
+  //  'Tess Myers': 10,
+  // }
+
+}
+
+countAllStudentsApplied(march2015students)
+  .tap(console.log);
