@@ -79,7 +79,7 @@ function getAllTasksByProjectId(id, debug) {
 
 
 // Parse through the list of tasks to sum up the number of companies applied to
-var listOfCountable = ['Graveyard', 'Applied', 'Phone Screen Scheduled', 'Phone Screen Completed', 'Technical Screen Scheduled', 'Technical Screen Completed', 'Coding Challenge Received', 'Coding Challenge Completed', 'On-site Interview Scheduled', 'On-side Interview Completed', 'Offers'];
+var listOfCountable = ['Graveyard', 'Applied', 'Phone Screen Scheduled', 'Phone Screen Completed ', 'Technical Screen Scheduled', 'Technical Screen Completed', 'Coding Challenge Received', 'Coding Challenge Completed', 'On-site Interview Scheduled', 'On-side Interview Completed', 'Offers'];
 function countApplied(tasks) {
   var inAppliedSection = false;
   return tasks.reduce(function countApplied(memo, item) {
