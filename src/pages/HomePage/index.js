@@ -90,7 +90,7 @@ var Highscores = React.createClass({
   render: function () {
     return (
       <Paper zDepth={3}>
-        <ReactTable data={data} />
+        <ReactTable data={data} initialSortKey='lastDay' />
       </Paper>
     );
   }
